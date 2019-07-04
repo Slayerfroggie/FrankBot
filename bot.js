@@ -1,7 +1,5 @@
 const Discord = require('discord.js')
-const {
-    token,
-} = require('./auth.json')
+const { token, } = require('./auth.json')
 const client = new Discord.Client()
 client.login(token);
 
