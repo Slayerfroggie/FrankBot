@@ -3,6 +3,14 @@ const { token, } = require('./auth.json')
 const client = new Discord.Client()
 client.login(token);
 
+client.on('ready', () => {
+    // List servers the bot is connected to
+    console.log("Servers:")
+    client.guilds.forEach((guild) => {
+        console.log(" - " + guild.name)
+    })
+})
+
 client.on('message', (receivedMessage) => {
     if (receivedMessage.author == client.user) { //Prevent bot from responding to its own messages
         return
