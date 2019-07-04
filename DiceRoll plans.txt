@@ -1,0 +1,4 @@
+make sure it doesn't accept anything but numbers
+does a total for all the dice rolled
+allow for artimetic/operations between dice rolls and other normal values e.g. 1d4 * 2d6 or 1d4 +/- 3 for modifiers
+

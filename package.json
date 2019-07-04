@@ -1,0 +1,14 @@
+{
+    "name": "frank-bot-thing",
+    "version": "1.0.0",
+    "description": "Frank's first time",
+    "main": "bot.js",
+    "author": "Franciscus",
+    "dependencies": {
+        "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
+        "discord.js": "^11.5.1",
+        "ffmpeg-binaries": "^4.0.0",
+        "opusscript": "0.0.6",
+        "ytdl-core": "^0.29.2"
+    }
+}
