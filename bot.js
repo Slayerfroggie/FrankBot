@@ -39,6 +39,8 @@ function processCommand(receivedMessage) {
         multiplyCommand(arguments, receivedMessage)
     } else if (primaryCommand == "frroll") {
         diceRollCommand(arguments, receivedMessage)
+    } else if (primaryCommand == "fr8ball"){
+        eightBallCommand(arguments, receivedMessage)
     } else {
         receivedMessage.channel.send("I don't know that command. Try `!frhelp`, `!frmultiply`, or `!frroll`")
     }
@@ -54,8 +56,7 @@ function helpCommand(arguments, receivedMessage, fullCommand) {
         receivedMessage.channel.send("Not giving me anything to work with is really not helpful.")
     } else {
         let badCommand = fullCommand.split("frhelp ")
-        //console.log("Bad help command: " + badCommand[1])
-        receivedMessage.channel.send("What the fuck does '" + badCommand[1]+ "' mean? Can you try using `!frhelp [command]` with an actual fucking command jfc")
+        receivedMessage.channel.send("What the fuck does '" + badCommand[1]+ "' mean? Can you try using `!frhelp [command]` with an actual fucking command")
     }
 }
 
@@ -104,6 +105,48 @@ function diceRollCommand(arguments, receivedMessage) {
         } else {
             receivedMessage.channel.send("Invalid quanitity of dice. Please enter a dice quantity of 1-10000")
         }
+    }
+}
+
+function eightBallCommand(arguments, receivedMessage) {
+    firstWord = arguments[0]
+    var questionStarters = ["do", "does", "did", "am", "are", "is", "was", "were",
+	"have", "has", "had", "will", "would", "shall", "should", "can", "could", "may", "might",
+	"Do", "Does", "Did", "Am", "Are", "Is", "Was", "Were", "Have", "Had", "Will", "Would", "Shall",
+    "Should", "Can", "Could", "May", "Might"]
+    questionvalid = false
+    for(i = 0; i < questionStarters.length; i++ ) {
+        if(questionStarters[i] === firstWord) {
+            eightBallRun(arguments, receivedMessage)
+            questionvalid = true
+            break
+        }
+    }
+    if(questionvalid = false){
+        receivedMessage.channel.send("No question")
+    }
+    
+    function eightBallRun(arguments, receivedMessage) {
+        var responses = ["It is certain.", "It is decidedly so.", "Without a doubt.", "Yes - definitely.",
+        "You may rely on it.", "As I see it, yes.", "Most likely.", "Outlook good.", "Yes.", "Signs point to yes.",
+        "Reply hazy, try again.", "Ask again later.", "Better not tell you now.", "Cannot predict now.", "Concentrate and ask again.",
+        "Don't count on it.", "My reply is no.", "My sources say no.", "Outlook not so good.", "Very doubtful"]
+        var dateTime = new Date()
+		//dateTime.setHours(0,0,0,0)
+        var dateTimeValue = Date.parse(dateTime)
+        var questionNumber = dateTimeValue
+        for(i = 0; i <= arguments.length; i++) {
+            if(i == 0) {
+                question = arguments[i]
+            } else {
+                question = question + arguments[i]
+            }
+        }
+        for(i = 0; i < question.length; i++) {
+            questionNumber += question.charCodeAt(i)
+        }
+        var randomNumber = (questionNumber % 19)
+        receivedMessage.channel.send(responses[randomNumber])
     }
 }
 
