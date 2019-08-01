@@ -19,7 +19,6 @@ client.on('message', (receivedMessage) => {
     let dadArguments = dadCommand.split(" ") //splits the message to detect the keywords
     processImDad(dadArguments, receivedMessage, dadCommand)
     processDadKYS(dadArguments, receivedMessage)
-    
     if (receivedMessage.content.startsWith("!fr")) {
         processCommand(receivedMessage)
     }
@@ -81,7 +80,7 @@ function diceRollCommand(arguments, receivedMessage) {
     }
     let diceRollInput = arguments[0].split("d")
     let rollResult = ""
-    if (diceRollInput.length != 2){
+    if (diceRollInput.length != 2) {
         receivedMessage.channel.send("Incorrect dice roll input. For correct input please type the quantity of dice being rolled, followed by a 'd' and the dice. `e.g. 1d4 or 3d12`")
         return
     } else {
@@ -114,18 +113,11 @@ function eightBallCommand(arguments, receivedMessage) {
 	"have", "has", "had", "will", "would", "shall", "should", "can", "could", "may", "might",
 	"Do", "Does", "Did", "Am", "Are", "Is", "Was", "Were", "Have", "Had", "Will", "Would", "Shall",
     "Should", "Can", "Could", "May", "Might"]
-    questionvalid = false
-    for(i = 0; i < questionStarters.length; i++ ) {
-        if(questionStarters[i] === firstWord) {
-            eightBallRun(arguments, receivedMessage)
-            questionvalid = true
-            break
-        }
+    if(questionStarters.includes(firstWord)) {
+        eightBallRun(arguments, receivedMessage)
+    } else {
+        receivedMessage.channel.send("Not a question")
     }
-    if(questionvalid = false){
-        receivedMessage.channel.send("No question")
-    }
-    
     function eightBallRun(arguments, receivedMessage) {
         var responses = ["It is certain.", "It is decidedly so.", "Without a doubt.", "Yes - definitely.",
         "You may rely on it.", "As I see it, yes.", "Most likely.", "Outlook good.", "Yes.", "Signs point to yes.",
