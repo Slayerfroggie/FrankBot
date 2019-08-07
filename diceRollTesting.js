@@ -9,6 +9,7 @@ client.on('ready', () => {
     client.guilds.forEach((guild) => {
         console.log(" - " + guild.name)
     })
+    console.log("------------------")
 })
 
 client.on('message', (receivedMessage) => {
@@ -34,7 +35,7 @@ function processCommand(receivedMessage) {
 }
 
 function diceRollCommand(arguments, receivedMessage) {
-    console.log("Dice roll command run on the server: " + receivedMessage.guild.name)
+    console.log("Dice roll command run on the server: " + receivedMessage.guild.name + "\n------------------")
     if (arguments.length != 1) {
         receivedMessage.channel.send("Incorrect dice roll input. For correct input please type the quantity of dice being rolled, followed by a 'd' and the dice. `e.g. 1d4 or 3d12`")
         return
