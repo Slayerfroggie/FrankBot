@@ -6,9 +6,13 @@
 #### Current Features
 * Multiplication of 2 or more numbers
 * Rolling 1-10000 Dice with a die face range of d2-d10000
-* Reverse engineered DadBot-like message responses (Responds to messages containing "I'm" or "kys" with sarcastic remarks)
+* DadBot-like message responses (Responds to messages containing "I'm" or "kys" with sarcastic remarks)
 * A Magic Eight Ball that checks for valid questions and seeds it's responses based off the question and datetime
 * Many more features are to be added to flex my programming skills
+
+#### Future Features
+* Adding arithmetic operations to dice rolling, so that dice can be added, subtracted, multiplied or divided after rolling
+* Youtube player functions so that it can play, skip, pause, stop, and queue videos from youtube
 
 #### Adding The Bot to a Server
 * If you want the bot on your server click [here](https://discordapp.com/api/oauth2/authorize?client_id=593008720334684160&permissions=6144&scope=bot)
