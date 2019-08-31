@@ -40,6 +40,8 @@ function processCommand(receivedMessage) {
         diceRollCommand(arguments, receivedMessage)
     } else if (primaryCommand == "fr8ball"){
         eightBallCommand(arguments, receivedMessage)
+    } else if (primaryCommand == "frhex"){
+        hexColorCommand(receivedMessage)
     } else {
         receivedMessage.channel.send("I don't know that command. Try `!frhelp`, `!frmultiply`, or `!frroll`")
     }
@@ -168,4 +170,23 @@ function processDadKYS(dadArguments, receivedMessage) {
             break
         }
     }
+}
+
+function hexColorCommand(receivedMessage) {
+    function makeid(length){
+        var result           = '';
+        var characters       = 'abcdef0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength))
+        }
+        return result;
+    }
+    randomColor = makeid(6)
+
+    let embed = new Discord.RichEmbed()
+        .setTitle("Here is your cool new colour")
+        .setColor("#" + randomColor)
+        .setURL("https://www.w3schools.com/colors/colors_picker.asp?colorhex=" + randomColor)
+    receivedMessage.channel.send(embed)
 }
