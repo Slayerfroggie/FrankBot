@@ -183,9 +183,16 @@ function hexColorCommand(receivedMessage) {
         return result;
     }
     randomColor = makeid(6)
+    R = hexToR("#" + randomColor);
+    G = hexToG("#" + randomColor);
+    B = hexToB("#" + randomColor);
+    function hexToR(h) {return parseInt((cutHex(h)).substring(0,2),16)}
+    function hexToG(h) {return parseInt((cutHex(h)).substring(2,4),16)}
+    function hexToB(h) {return parseInt((cutHex(h)).substring(4,6),16)}
+    function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}
     let embed = new Discord.RichEmbed()
         .setTitle("Here is your cool new colour")
-        .setDescription("Hex: #" + randomColor)
+        .setDescription("Hex: **#" + randomColor + "**\nRGB: (" + R + ", " + G + ", " + B + ")")
         .setColor("#" + randomColor)
         .setURL("https://www.w3schools.com/colors/colors_picker.asp?colorhex=" + randomColor)
     receivedMessage.channel.send(embed)
