@@ -38,9 +38,9 @@ function processCommand(receivedMessage) {
         multiplyCommand(arguments, receivedMessage)
     } else if (primaryCommand == "frroll") {
         diceRollCommand(arguments, receivedMessage)
-    } else if (primaryCommand == "fr8ball"){
+    } else if (primaryCommand == "fr8ball") {
         eightBallCommand(arguments, receivedMessage)
-    } else if (primaryCommand == "frhex"){
+    } else if (primaryCommand == "frhex") {
         hexColorCommand(receivedMessage)
     } else {
         receivedMessage.channel.send("I don't know that command. Try `!frhelp`, `!frmultiply`, or `!frroll`")
@@ -57,7 +57,7 @@ function helpCommand(arguments, receivedMessage, fullCommand) {
         receivedMessage.channel.send("Not giving me anything to work with is really not helpful.")
     } else {
         let badCommand = fullCommand.split("frhelp ")
-        receivedMessage.channel.send("What the fuck does '" + badCommand[1]+ "' mean? Can you try using `!frhelp [command]` with an actual fucking command")
+        receivedMessage.channel.send("I do not know what '" + badCommand[1]+ "' means. Try using `!frhelp [command]` with the command multiply or roll")
     }
 }
 
@@ -129,7 +129,7 @@ function eightBallCommand(arguments, receivedMessage) {
 		//dateTime.setHours(0,0,0,0)
         var dateTimeValue = Date.parse(dateTime)
         var questionNumber = dateTimeValue
-        for(i = 0; i <= arguments.length; i++) {
+        for(i = 0; i <= arguments.length; i++) { 
             if(i == 0) {
                 question = arguments[i]
             } else {
@@ -144,13 +144,13 @@ function eightBallCommand(arguments, receivedMessage) {
     }
 }
 
-function processImDad(dadArguments, receivedMessage, dadCommand){
+function processImDad(dadArguments, receivedMessage, dadCommand) {
     for (i = 0; i <= dadArguments.length; i++)
     {
         if (dadArguments[i] == "i'm" || dadArguments[i] == "im" || dadArguments[i] == "I'm" ||dadArguments[i] == "Im" ) { //detecting the keyword
             if (dadArguments[i + 1] == "dad" || dadArguments[i + 1] == "Dad") {
                 console.log("Dad comeback command run on the server: " + receivedMessage.guild.name)
-                receivedMessage.channel.send("No you're not, you're " + receivedMessage.author.username + ".")
+                receivedMessage.channel.send("No you're not, you're " + receivedMessage.author.username + ".", {tts: true})
             } else {
                 console.log("Dad comeback command run on the server: " + receivedMessage.guild.name)
                 dadString = dadCommand.split(dadArguments[i])//spliting the same string in the start of the loop, but spliting by the keyword
@@ -164,16 +164,16 @@ function processImDad(dadArguments, receivedMessage, dadCommand){
 
 function processDadKYS(dadArguments, receivedMessage) {
     for (i = 0; i <= dadArguments.length; i++){
-        if (dadArguments[i] == "KYS" || dadArguments[i] == "kys"){
+        if (dadArguments[i] == "KYS" || dadArguments[i] == "kys") {
             console.log("Dad kys command run on the server: " + receivedMessage.guild.name)
-            receivedMessage.channel.send("Alright "+ receivedMessage.author.username + ", that was very rude. Instead, take your own advice.")
+            receivedMessage.channel.send("Alright "+ receivedMessage.author.username + ", that was very rude. Instead, take your own advice.", {tts: true})
             break
         }
     }
 }
 
 function hexColorCommand(receivedMessage) {
-    function makeid(length){
+    function makeid(length) {
         var result           = '';
         var characters       = 'abcdef0123456789';
         var charactersLength = characters.length;
@@ -183,9 +183,9 @@ function hexColorCommand(receivedMessage) {
         return result;
     }
     randomColor = makeid(6)
-
     let embed = new Discord.RichEmbed()
         .setTitle("Here is your cool new colour")
+        .setDescription("Hex: #" + randomColor)
         .setColor("#" + randomColor)
         .setURL("https://www.w3schools.com/colors/colors_picker.asp?colorhex=" + randomColor)
     receivedMessage.channel.send(embed)
