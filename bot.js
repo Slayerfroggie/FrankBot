@@ -17,9 +17,9 @@ client.on('message', (receivedMessage) => {
     }
     let dadCommand = receivedMessage.content //gets message before the command identifier
     let dadArguments = dadCommand.split(" ") //splits the message to detect the keywords
-    processImDad(dadArguments, receivedMessage, dadCommand)
+    processImDad(dadArguments, receivedMessage, dadCommand)//functions that search messages for dad joke triggers
     processDadKYS(dadArguments, receivedMessage)
-    if (receivedMessage.content.startsWith("!fr")) {
+    if (receivedMessage.content.startsWith("!fr")) { //searching message for command starter
         processCommand(receivedMessage)
     }
 })
@@ -29,9 +29,9 @@ function processCommand(receivedMessage) {
     let splitCommand = fullCommand.split(" ") // Split the message up in to pieces for each space
     let primaryCommand = splitCommand[0] // The first word directly after the exclamation is the command
     let arguments = splitCommand.slice(1) // All other words are arguments/parameters/options for the command
-    console.log("Full command: " + fullCommand)
-    console.log("Command received: " + primaryCommand)
-    console.log("Arguments: " + arguments) // There may not be any arguments
+    console.log("Full command: " + fullCommand)// the command and arguments combined
+    console.log("Command received: " + primaryCommand)// the command itself
+    console.log("Arguments: " + arguments) // logs the arguments for the command
     if (primaryCommand == "frhelp") {
         helpCommand(arguments, receivedMessage, fullCommand)
     } else if (primaryCommand == "frmultiply") {
@@ -43,7 +43,7 @@ function processCommand(receivedMessage) {
     } else if (primaryCommand == "frhex") {
         hexColorCommand(receivedMessage)
     } else {
-        receivedMessage.channel.send("I don't know that command. Try `!frhelp`, `!frmultiply`, or `!frroll`")
+        receivedMessage.channel.send("I don't know that command. Try `!frhelp`, `!frmultiply`, or `!frroll`")// if none of the above commands are found
     }
 }
 
@@ -157,8 +157,8 @@ function processImDad(dadArguments, receivedMessage, dadCommand) {
                 dadComeback = dadString[1] //putting the string after the keyword into the 
                 receivedMessage.channel.send("Hi" + dadComeback + ", I'm Dad!")
             }   
+            break //breaks the loop to avoid several keywords triggering several messages
         }
-        break //breaks the loop to avoid several keywords triggering several messages
     }
 }
 
