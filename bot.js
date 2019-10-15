@@ -11,6 +11,15 @@ client.on('ready', () => {
     })
 })
 
+client.on('guildMemberAdd', guildMember => {
+    // Set the member's roles to a new single role
+    const baguette = guildMember.guild
+    if (baguette.name = "Baguettes"){
+        guildMember.setRoles(['387154651365113866']).catch(console.error);
+        console.log("New member successfully made into Baguette")
+    }
+});
+
 client.on('message', (receivedMessage) => {
     if (receivedMessage.author == client.user) { //Prevent bot from responding to its own messages
         return
