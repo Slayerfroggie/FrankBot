@@ -1,6 +1,14 @@
 const Discord = require('discord.js')
 const { token, } = require('./auth.json')
+const { youtubeAuth, } = require('./youtube-auth.json')
 const client = new Discord.Client()
+
+client.music = require("discord.js-musicbot-addon")
+client.music.start(client, {
+    youtubeKey: youtubeAuth,
+    insertMusic: true
+})
+
 client.login(token);
 
 client.on('ready', () => {
@@ -16,7 +24,7 @@ client.on('guildMemberAdd', guildMember => {
     const baguette = guildMember.guild
     if (baguette.name = "Baguettes"){
         guildMember.setRoles(['387154651365113866']).catch(console.error);
-        console.log("New member successfully made into Baguette")
+        console.log("New member named '" + guildMember.username + "' successfully made into Baguette")
     }
 });
 
@@ -43,6 +51,8 @@ function processCommand(receivedMessage) {
     console.log("Arguments: " + arguments) // logs the arguments for the command
     if (primaryCommand == "frhelp") {
         helpCommand(arguments, receivedMessage, fullCommand)
+    } else if (primaryCommand == "frplay") {
+        musicPlayCommand(arguments, receivedMessage)
     } else if (primaryCommand == "frmultiply") {
         multiplyCommand(arguments, receivedMessage)
     } else if (primaryCommand == "frroll") {
@@ -68,6 +78,11 @@ function helpCommand(arguments, receivedMessage, fullCommand) {
         let badCommand = fullCommand.split("frhelp ")
         receivedMessage.channel.send("I do not know what '" + badCommand[1]+ "' means. Try using `!frhelp [command]` with the command multiply or roll")
     }
+}
+
+function musicPlayCommand(arguments, receivedMessage) {
+    client.music.playFunction(arguments)
+    receivedMessage.channel.send("music play hopefully")
 }
 
 function multiplyCommand(arguments, receivedMessage) {
@@ -172,11 +187,11 @@ function processImDad(dadArguments, receivedMessage, dadCommand) {
 }
 
 function processDadKYS(dadArguments, receivedMessage) {
-    for (i = 0; i <= dadArguments.length; i++){
-        if (dadArguments[i] == "KYS" || dadArguments[i] == "kys") {
-            console.log("Dad kys command run on the server: " + receivedMessage.guild.name)
-            receivedMessage.channel.send("Alright "+ receivedMessage.author.username + ", that was very rude. Instead, take your own advice.", {tts: true})
-            break
+    for (i = 0; i <= dadArguments.length; i++){ // for loop on words in message array
+        if (dadArguments[i] == "KYS" || dadArguments[i] == "kys") { //finding kys in array
+            console.log("Dad kys command run on the server: " + receivedMessage.guild.name) //console log if a kys command was triggered
+            receivedMessage.channel.send("Alright "+ receivedMessage.author.username + ", that was very rude. Instead, take your own advice.", {tts: true}) //printing response message
+            break // break to make sure the for stops scanning the message as well as ending the function
         }
     }
 }
@@ -195,10 +210,18 @@ function hexColorCommand(receivedMessage) {
     R = hexToR("#" + randomColor);
     G = hexToG("#" + randomColor);
     B = hexToB("#" + randomColor);
-    function hexToR(h) {return parseInt((cutHex(h)).substring(0,2),16)}
-    function hexToG(h) {return parseInt((cutHex(h)).substring(2,4),16)}
-    function hexToB(h) {return parseInt((cutHex(h)).substring(4,6),16)}
-    function cutHex(h) {return (h.charAt(0)=="#") ? h.substring(1,7):h}
+    function hexToR(h) {
+        return parseInt((cutHex(h)).substring(0,2),16)
+    }
+    function hexToG(h) {
+        return parseInt((cutHex(h)).substring(2,4),16)
+    }
+    function hexToB(h) {
+        return parseInt((cutHex(h)).substring(4,6),16)
+    }
+    function cutHex(h) {
+        return (h.charAt(0)=="#") ? h.substring(1,7):h
+    }
     let embed = new Discord.RichEmbed()
         .setTitle("Here is your cool new colour")
         .setDescription("Hex: **#" + randomColor + "**\nRGB: (" + R + ", " + G + ", " + B + ")")
