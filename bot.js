@@ -22,9 +22,9 @@ client.on('ready', () => {
 client.on('guildMemberAdd', guildMember => {
     // Set the member's roles to a new single role
     const baguette = guildMember.guild
-    if (baguette.name = "Baguettes"){
+    if (baguette.name = "Baguettes") {
         guildMember.setRoles(['387154651365113866']).catch(console.error);
-        console.log("New member named '" + guildMember.username + "' successfully made into Baguette")
+        client.guilds.get('308190520994430976').channels.get("445123859759497216").send("Welcome to the server " + guildMember.displayName + " you have successfully been given the role of Baguette.")
     }
 });
 
