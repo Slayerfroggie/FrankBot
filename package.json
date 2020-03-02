@@ -16,7 +16,6 @@
         "url": "git+https://github.com/Slayerfroggie/FrankBot.git"
     },
     "dependencies": {
-        "bcrypt": "^3.0.6",
         "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
         "discord.js": "^11.5.1",
         "discord.js-musicbot-addon": "^13.8.1",
