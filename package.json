@@ -4,6 +4,17 @@
     "description": "Frank's first time",
     "main": "bot.js",
     "author": "Franciscus",
+    "engines": {
+        "node": "10.16.0",
+        "npm": "6.9.0"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Slayerfroggie/FrankBot.git"
+    },
     "dependencies": {
         "bcrypt": "^3.0.6",
         "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
