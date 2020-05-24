@@ -1,13 +1,7 @@
 const Discord = require('discord.js')
-const { token, } = require('./auth.json')
-const { youtubeAuth, } = require('./youtube-auth.json')
-const client = new Discord.Client()
+const { token } = require('./auth.json')
 
-client.music = require("discord.js-musicbot-addon")
-client.music.start(client, {
-    youtubeKey: youtubeAuth,
-    insertMusic: true
-})
+const client = new Discord.Client()
 
 client.login(token);
 
@@ -17,17 +11,18 @@ client.on('ready', () => {
     client.guilds.forEach((guild) => {
         console.log(" - " + guild.name)
     })
+    console.log("\n")
 })
 
 client.on('guildMemberAdd', guildMember => {
     // Set the member's roles to a new single role
-    const guild = client.guilds.get('308190520994430976')
-        if (guild.id = "308190520994430976") {
-            guildMember.setRoles(['387154651365113866']).catch(console.error);
-            client.guilds.get('308190520994430976').channels.get("593021188838522900").send("Welcome to the server <@" + guildMember.id + "> you have successfully been given the role of Baguette.")
-            //guildMember.displayName + "> you have successfully been given the role of Baguette.") old one just in case new one is a no go
-        }
-});
+    let guild = client.guilds.get('308190520994430976'), userId = guildMember.id
+    if (guild.member(userId)) {
+        guildMember.setRoles(['387154651365113866']).catch(console.error);
+        client.guilds.get('308190520994430976').channels.get('684611806748082218').send("Welcome to the server <@" + guildMember.id + "> you have successfully been given the role of Baguette.")
+        //guildMember.displayName + "> you have successfully been given the role of Baguette.") old one just in case new one is a no go
+    }
+})
 
 client.on('message', (receivedMessage) => {
     if (receivedMessage.author == client.user) { //Prevent bot from responding to its own messages
@@ -39,6 +34,18 @@ client.on('message', (receivedMessage) => {
     processDadKYS(dadArguments, receivedMessage)
     if (receivedMessage.content.startsWith("!fr")) { //searching message for command starter
         processCommand(receivedMessage)
+    }
+})
+
+client.on('voiceStateUpdate', (oldMember, newMember) => {
+    let newUserChannel = newMember.voiceChannel
+    let oldUserChannel = oldMember.voiceChannel
+    var dateTime = new Date()
+    if(oldUserChannel === undefined && newUserChannel !== undefined) {
+       // User Joins a voice channel
+    } else if(newUserChannel === undefined){
+      // User leaves a voice channel
+      console.log("-----Voice Channel Disconnection----- \nTime: " + dateTime + "\nUser: '" + oldMember.displayName + "'\nServer: '" + oldMember.guild.name + "'\nChannel: '" + oldMember.voiceChannel.name + "'\n")
     }
 })
 
@@ -175,7 +182,7 @@ function processImDad(dadArguments, receivedMessage, dadCommand) {
         if (dadArguments[i] == "i'm" || dadArguments[i] == "im" || dadArguments[i] == "I'm" ||dadArguments[i] == "Im" ) { //detecting the keyword
             if (dadArguments[i + 1] == "dad" || dadArguments[i + 1] == "Dad") {
                 console.log("Dad comeback command run on the server: " + receivedMessage.guild.name)
-                receivedMessage.channel.send("No you're not, you're " + receivedMessage.author.username + ".", {tts: true})
+                receivedMessage.channel.send("No you're not, you're " + receivedMessage.author.username + ".")
             } else {
                 console.log("Dad comeback command run on the server: " + receivedMessage.guild.name)
                 dadString = dadCommand.split(dadArguments[i])//spliting the same string in the start of the loop, but spliting by the keyword
@@ -191,7 +198,7 @@ function processDadKYS(dadArguments, receivedMessage) {
     for (i = 0; i <= dadArguments.length; i++){ // for loop on words in message array
         if (dadArguments[i] == "KYS" || dadArguments[i] == "kys") { //finding kys in array
             console.log("Dad kys command run on the server: " + receivedMessage.guild.name) //console log if a kys command was triggered
-            receivedMessage.channel.send("Alright "+ receivedMessage.author.username + ", that was very rude. Instead, take your own advice.", {tts: true}) //printing response message
+            receivedMessage.channel.send("Alright "+ receivedMessage.author.username + ", that was very rude. Instead, take your own advice.") //printing response message
             break // break to make sure the for stops scanning the message as well as ending the function
         }
     }
