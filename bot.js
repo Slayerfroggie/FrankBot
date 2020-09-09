@@ -14,15 +14,15 @@ client.on('ready', () => {
     console.log("\n")
 })
 
-client.on('guildMemberAdd', guildMember => {
-    // Set the member's roles to a new single role
-    let guild = client.guilds.get('308190520994430976'), userId = guildMember.id
-    if (guild.member(userId)) {
-        guildMember.setRoles(['387154651365113866']).catch(console.error);
-        client.guilds.get('308190520994430976').channels.get('684611806748082218').send("Welcome to the server <@" + guildMember.id + "> you have successfully been given the role of Baguette.")
-        //guildMember.displayName + "> you have successfully been given the role of Baguette.") old one just in case new one is a no go
-    }
-})
+// client.on('guildMemberAdd', guildMember => {
+//     // Set the member's roles to a new single role
+//     let guild = client.guilds.get('308190520994430976'), userId = guildMember.id
+//     if (guild.member(userId)) {
+//         guildMember.setRoles(['387154651365113866']).catch(console.error);
+//         client.guilds.get('308190520994430976').channels.get('684611806748082218').send("Welcome to the server <@" + guildMember.id + "> you have successfully been given the role of Baguette.")
+//         //guildMember.displayName + "> you have successfully been given the role of Baguette.") old one just in case new one is a no go
+//     }
+// })
 
 client.on('message', (receivedMessage) => {
     if (receivedMessage.author == client.user) { //Prevent bot from responding to its own messages
@@ -69,6 +69,8 @@ function processCommand(receivedMessage) {
         eightBallCommand(arguments, receivedMessage)
     } else if (primaryCommand == "frhex") {
         hexColorCommand(receivedMessage)
+    } else if (primaryCommand == "frlink") {
+        discordLinkCommand(receivedMessage)
     } else {
         receivedMessage.channel.send("I don't know that command. Try `!frhelp`, `!frmultiply`, or `!frroll`")// if none of the above commands are found
     }
@@ -86,11 +88,6 @@ function helpCommand(arguments, receivedMessage, fullCommand) {
         let badCommand = fullCommand.split("frhelp ")
         receivedMessage.channel.send("I do not know what '" + badCommand[1]+ "' means. Try using `!frhelp [command]` with the command multiply or roll")
     }
-}
-
-function musicPlayCommand(arguments, receivedMessage) {
-    client.music.playFunction(arguments)
-    receivedMessage.channel.send("music play hopefully")
 }
 
 function multiplyCommand(arguments, receivedMessage) {
@@ -177,20 +174,25 @@ function eightBallCommand(arguments, receivedMessage) {
 }
 
 function processImDad(dadArguments, receivedMessage, dadCommand) {
-    for (i = 0; i <= dadArguments.length; i++)
-    {
-        if (dadArguments[i] == "i'm" || dadArguments[i] == "im" || dadArguments[i] == "I'm" ||dadArguments[i] == "Im" ) { //detecting the keyword
-            if (dadArguments[i + 1] == "dad" || dadArguments[i + 1] == "Dad") {
-                console.log("Dad comeback command run on the server: " + receivedMessage.guild.name)
-                receivedMessage.channel.send("No you're not, you're " + receivedMessage.author.username + ".")
-            } else {
-                console.log("Dad comeback command run on the server: " + receivedMessage.guild.name)
-                dadString = dadCommand.split(dadArguments[i])//spliting the same string in the start of the loop, but spliting by the keyword
-                dadComeback = dadString[1] //putting the string after the keyword into the 
-                receivedMessage.channel.send("Hi" + dadComeback + ", I'm Dad!")
-            }   
-            break //breaks the loop to avoid several keywords triggering several messages
+    try {
+        for (i = 0; i <= dadArguments.length; i++)
+        {
+            if (dadArguments[i] == "i'm" || dadArguments[i] == "im" || dadArguments[i] == "I'm" ||dadArguments[i] == "Im" ) { //detecting the keyword
+                if (dadArguments[i + 1] == "dad" || dadArguments[i + 1] == "Dad") {
+                    console.log("Dad comeback command run on the server: " + receivedMessage.guild.name)
+                    receivedMessage.channel.send("No you're not, you're " + receivedMessage.author.username + ".")
+                } else {
+                    console.log("Dad comeback command run on the server: " + receivedMessage.guild.name)
+                    dadString = dadCommand.split(dadArguments[i])//spliting the same string in the start of the loop, but spliting by the keyword
+                    dadComeback = dadString[1] //putting the string after the keyword into the 
+                    receivedMessage.channel.send("Hi" + dadComeback + ", I'm Dad!")
+                }   
+                break //breaks the loop to avoid several keywords triggering several messages
+            }
         }
+    }
+    catch(error) {
+        console.log(error)
     }
 }
 
@@ -202,6 +204,20 @@ function processDadKYS(dadArguments, receivedMessage) {
             break // break to make sure the for stops scanning the message as well as ending the function
         }
     }
+}
+
+function discordLinkCommand(receivedMessage) {
+    function makeid(length) {
+        var result           = '';
+        var characters       = 'abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    }
+    randomLink = makeid(7)
+    receivedMessage.channel.send("https://discord.gg/" + randomLink)
 }
 
 function hexColorCommand(receivedMessage) {
